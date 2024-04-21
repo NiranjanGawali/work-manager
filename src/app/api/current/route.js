@@ -8,6 +8,11 @@ export const GET = async (request) => {
     await connectDb();
 
     const loginToken = request.cookies.get('loginToken')?.value;
+    if (!loginToken) {
+      return NextResponse.json({
+        message: 'User is not logged in !!!',
+      });
+    }
     const userInfo = jwt.verify(loginToken, process.env.JWT_KEY);
     let user = undefined;
     if (userInfo)
