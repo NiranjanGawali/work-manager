@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 // This function can be marked `async` if using `await` inside
 export function middleware(request) {
   const loginToken = request.cookies.has('loginToken');
+  console.log('LOGIN TOKEN - ', loginToken);
 
   if (
     request.nextUrl.pathname == '/api/login' ||
@@ -23,6 +24,8 @@ export function middleware(request) {
     }
   } else {
     // Accessing secured route
+    console.log('When path is not public');
+    console.log(loginToken);
     if (!loginToken) {
       if (request.nextUrl.pathname.startsWith('/api')) {
         return NextResponse.json(
